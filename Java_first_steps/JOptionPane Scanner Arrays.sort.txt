@@ -1,0 +1,22 @@
+public class Main {
+    public static void main(String[] args) {
+        
+        System.out.println("Podaj 3 boki trójk¹ta");
+        Scanner scan = new Scanner(System.in);
+        
+        double[] tab = new double[3];
+        for(int i=0; i < tab.length; i++){
+                
+        tab[i] = scan.nextDouble();
+        }
+        
+        if (tab[2] != 0){
+            scan.close();
+        }
+        
+        Arrays.sort(tab);
+        
+        if(tab[0]+tab[1]>tab[2]){
+            JOptionPane.showInputDialog("Da siê");
+        }else{ JOptionPane.showInputDialog("Nie da siê");}
+}}

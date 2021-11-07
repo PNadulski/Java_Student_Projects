@@ -1,0 +1,116 @@
+package javaapplication16;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+public class JavaApplication16 {
+
+    public static void main(String[] args) {
+        // write your code here
+        Osoba[] osoby = new Osoba[]{
+                new Osoba("23628384429", "Jan", "Kowalski"),
+                new Osoba("12345678901", "Maria", "Nowak"),
+                new Osoba("87342784678", "Adam", "Kowalski"),
+                new Osoba("12345678999", "Maria", "Polak"),
+                new Osoba("87342784678", "Adam", "Pudełko")
+        };
+
+        System.out.println("Przed sortowaniem:");
+        for (Osoba os : osoby) {
+            System.out.println(os);
+        }
+
+        //Sortowanie wg nazwisk i imion z uzyciem klasy wewnetrznej
+        class NazwiskoSort implements Comparator<Osoba> {
+
+           @Override
+            public int compare(Osoba o1, Osoba o2) {
+                int c = o1.getNazwisko().compareTo(o2.getNazwisko());
+                if (c == 0) {
+                    c = o1.getImie().compareTo(o2.getImie());
+                }
+                return c;
+            }
+        }
+        Arrays.sort(osoby, new NazwiskoSort());
+        System.out.println("Nazwiska i imiona:");
+        for (Osoba os : osoby) {
+            System.out.println(os);
+        }
+
+        //klase wewnetrzna mozna wykorzystac ponownie np.
+        //do sortowania studentow
+        Student[] studenci = new Student[]{
+                new Student("43434343434", "Anna", "Wolska", 12345),
+                new Student("89876543575", "Hanna", "Kot", 8776)
+        };
+        System.out.println("Studenci przed sortowaniem:");
+        for (Student s : studenci) {
+            System.out.println(s);
+        }
+        Arrays.sort(studenci, new NazwiskoSort());
+        System.out.println("Studenci posortowani:");
+        for (Student s : studenci) {
+            System.out.println(s);
+        }
+
+        //Sortowanie PESELami z uzyciem klasy anonimowej
+        Arrays.sort(osoby, new Comparator<Osoba>() {
+            @Override
+            public int compare(Osoba o1, Osoba o2) {
+                return o1.getPesel().compareTo(o2.getPesel());
+            }
+//            @Override
+//            public int compare(Osoba o1, Osoba o2) {
+//                return o1.getPesel().compareTo(o2.getPesel());
+//            }
+        });
+        Arrays.sort(studenci, new Comparator<Student>() {
+            @Override
+            public int compare(Student o1, Student o2) {
+                return o1.getNrIndeksu()-o2.getNrIndeksu();
+            }
+        });
+
+
+        //to samo lambda wyrazeniem
+        Arrays.sort(osoby, (Osoba o1, Osoba o2) -> o1.getPesel().compareTo(o2.getPesel()));
+
+
+
+
+
+
+
+        //znow sortowanie po peselu ale komparator tworzymy korzystajac z metody Comparatora comparing
+        Comparator<Osoba> byPesel = Comparator.comparing(Osoba::getPesel);
+        Arrays.sort(osoby, byPesel);
+
+        //wyswietlamy posortowana lista
+        System.out.println("PESELu:");
+        for (Osoba os : osoby) {
+            System.out.println(os);
+        }
+
+        //lub to samo alternatywnie  z wykorzystaniem programowania strumieniowego
+        //tworzymy strumien na tablicy Arrays.stream(tablica)
+        //sortujemy elementy na podstawie komparatora  getPesel  .sorted(kompartor)
+        //i wyswietlamy je wszytskie .forEach(System.out::println)
+        //lub z lambda wyrazeniem:.forEach(e -> System.out.println(e));
+        Arrays.stream(osoby).sorted(byPesel).forEach(e -> System.out.println(e));
+
+        //sortowanie w odwrotnej kolejnosci:
+        //wyswietlamy posortowana lista ae odwrotnie:
+        System.out.println("PESELu odwrotnie:");
+        Arrays.stream(osoby).sorted(byPesel.reversed()).forEach(e -> System.out.println(e));
+
+        //dwie osoby o najmniejszym peselu
+        System.out.println("2 najmniejsze PESELe:");
+        Arrays.stream(osoby).sorted(byPesel).limit(2).forEach(e -> System.out.println(e));
+
+        //osobak o min peselu o nazwisku na "P"
+        System.out.println("osoba o min peselu o nazwisku na \"P\"");
+        Osoba os = Arrays.stream(osoby).filter(e -> e.getNazwisko().startsWith("P")).min(byPesel).orElse(null);
+        System.out.println(os);
+    }
+}

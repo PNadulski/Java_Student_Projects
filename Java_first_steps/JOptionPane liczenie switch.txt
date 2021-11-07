@@ -1,0 +1,32 @@
+public class Main {
+    public static void main(String[] args) {
+        
+        String pom = JOptionPane.showInputDialog("Podaj dzia³anie w formie: liczba1 znak liczba2 ");
+        double wynik = 0;
+        String tab[] = pom.split(" ");  
+        int a = Integer.parseInt(tab[0]);
+        String b = tab[1];
+        int c = Integer.parseInt(tab[2]);
+                          
+                   if(null != b)switch (b) {
+            case "+":
+                wynik = (a +  c);
+                break;
+            case "-":
+                wynik = (a - c);
+                break;
+            case "*":
+                wynik = (a * c);
+                break;
+            case "/":
+                wynik = (a / c);
+                break;
+            case "%":
+                wynik = (a % c);
+                break;
+            default:
+                break;
+        }        
+        JOptionPane.showInputDialog(wynik);
+             
+}}

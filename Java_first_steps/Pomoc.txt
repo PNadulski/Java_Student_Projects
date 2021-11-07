@@ -1,0 +1,123 @@
+package PZJ;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class Pomoc {
+
+    public static void Obsluga() throws FileNotFoundException {
+
+        String napis = pobierzDane();
+        String[] tmpTablica = napis.split(" ");
+
+
+            switch (tmpTablica[0]) {
+                case "help":
+                    System.out.println("dodaj = dodaje kolejne proby \n count = liczy ilosc prob \n avg = liczy srednia \n list = wyswietli liste "
+                            + "\n min = wyswietli najmniejsza probe \n load = pobiera liste z pliku \n save = zapisuje dane do pliku");
+                    break;
+                case "dodaj":
+                    dodajVektor(tmpTablica);
+                    break;
+                case "count":
+                    policzIle();
+                    break;
+                case "avg":  srednia();
+                    break;
+                case "list":  wyswietlListe();
+                    break;
+                case "min":  najmniejszaLiczba();
+                    break;
+                case "load":  probkiZPliku();
+                    break;
+                case "save":  //zapiszDoPliku();
+                    break;
+                default:
+                    System.out.println("Z³a komenda!");
+            }
+        }
+    
+    
+    private static void policzIle(){
+        System.out.println("Aktualnie masz do dyspozycji "+ListaProb.listaProb.size()+" list");
+    }
+    
+    private static void srednia(){
+        for (Vektor v : ListaProb.listaProb) {
+            System.out.println("Sreeednia liczb z tej listy wynosi: "+v.liczSrednia());
+        }
+    }
+    
+    private static void wyswietlListe() {
+        for (Vektor v : ListaProb.listaProb) {
+            v.wyswietlVektor();
+        }
+    }
+    
+    private static void najmniejszaLiczba(){
+      for (Vektor v : ListaProb.listaProb) {
+            System.out.println("Najmniejsza liczba liczba z tej listy to: "+v.najmniejszaLiczba());
+        }
+         
+    }
+
+    private static void dodajVektor(String[] tmpTablica) {
+        LinkedList<Double> tmpLista = new LinkedList<>();
+
+        for (int i = 2; i<tmpTablica.length;i++) {
+            tmpLista.add(Double.parseDouble(tmpTablica[i]));
+        }
+
+        Vektor v = new Vektor(tmpTablica[1],tmpLista);
+        ListaProb.listaProb.add(v);
+    }
+
+    private static String pobierzDane() {
+        Scanner sc = new Scanner(System.in);
+        String napis;
+
+        System.out.println("wpisz help by uzyskaæ pomoc");
+
+        System.out.println("Co chcesz zrobiæ? \n");
+        napis = sc.nextLine();
+
+        return napis;
+    }
+    
+     private static void probkiZPliku()throws FileNotFoundException{
+         File file = new File("C:\\Users\\FruGo\\Desktop\\ProgramZaliczeniowyJava\\src\\PZJ\\test.txt");
+         Scanner sc = new Scanner(file);
+         String napis2;
+         napis2 = sc.nextLine();
+         String[] tmpTablica2 = napis2.split(" ");
+         
+         LinkedList<Double> tmpLista = new LinkedList<>();
+
+        for (int i = 1; i<tmpTablica2.length;i++) {
+            tmpLista.add(Double.parseDouble(tmpTablica2[i]));
+        }
+
+        Vektor v = new Vektor(tmpTablica2[0],tmpLista);
+        ListaProb.listaProb.add(v);
+ 
+     }
+     
+     private static void zapiszDoPliku()throws FileNotFoundException{
+         PrintWriter zapis = new PrintWriter("ala.txt");
+         for (Vektor v : ListaProb.listaProb) {
+           String pom [] = v.dajVektor();
+           
+           for(int i=0; i<v.getIlosc(); i++){
+               zapis.println(pom[i]);
+           }
+        }
+          
+	  zapis.close();
+     
+     
+     }
+}
+   

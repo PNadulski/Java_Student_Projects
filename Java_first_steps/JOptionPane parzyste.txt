@@ -1,0 +1,14 @@
+package cw3zad6;
+
+import javax.swing.JOptionPane;
+public class Main {
+    public static void main(String[] args) {
+        
+        String s = JOptionPane.showInputDialog("Podaj liczbê ca³kowit¹: ");
+        int a = Integer.parseInt(s);
+        if(a%2==1){
+            JOptionPane.showInputDialog("Podana liczba jest nieparzysta ");
+        }
+        else{
+            JOptionPane.showInputDialog("Podana liczba jest parzysta ");
+}}}

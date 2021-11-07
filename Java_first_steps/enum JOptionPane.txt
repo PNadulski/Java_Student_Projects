@@ -1,0 +1,33 @@
+package cw3zad2;
+import javax.swing.JOptionPane;
+public class Main {
+    public static void main(String[] args) {
+        
+        String dts = JOptionPane.showInputDialog("Podaj dzieñ tygodnia: ");
+        if(dts != null){
+            dniTygodnia dt = dniTygodnia.valueOf(dts.toUpperCase());
+            if(dt.isWeekend() == true){
+                JOptionPane.showInputDialog("Jest ju¿ weekend!");
+            }else{
+                JOptionPane.showInputDialog("Musisz jeszcze pracowaæ ");
+        }
+}}}
+
+
+Enum
+
+package cw3zad2;
+public enum dniTygodnia {
+    
+    PONIEDZIA£EK(false), WTOREK(false), ŒRODA(false), CZWARTEK(false), PI¥TEK(false),
+    SOBOTA(true), NIEDZIELA(true);
+    
+    private final boolean weekend;
+    
+    private dniTygodnia(boolean weekend) {
+        this.weekend = weekend;
+    }
+
+    public boolean isWeekend() {
+        return weekend;
+}}
